@@ -40,9 +40,9 @@ if (!class_exists('GQL_Ext_Nesar')) {
         {
             if ($postType == 'all') {
                 $allUri = [];
-                $PostTypes = get_allPostsFromAllpostTypes();
+                $PostTypes = $this->getAllpostTypes();
                 foreach ($PostTypes as $type => $slug) {
-                    $posts = get_all_post($type);
+                    $posts = $this->get_all_post($type);
                     foreach ($posts as $url) {
                         array_push($allUri, $url);
                     }
@@ -56,7 +56,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
             $url = $post->post_name;
             if ($pid != 0) {
                 $par = get_post($pid, OBJECT, 'raw');
-                $parent = createUrl($par);
+                $parent = $this->createUrl($par);
                 $url = $parent . '/' . $url;
             }
 
@@ -76,7 +76,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 $all_posts = get_posts($args);
                 foreach ($all_posts as $post) {
 
-                    array_push($url, createUrl($post));
+                    array_push($url, $this->createUrl($post));
                 }
                 return $url;
             } else {
