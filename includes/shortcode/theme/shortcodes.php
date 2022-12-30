@@ -28,6 +28,10 @@ if (!class_exists('ThemeShortCodes')) {
                 'container'
             );
             $attrs['style'] != '' && $style = 'style="' . $attrs['style'] . '"';
+            $contains = strpos($content, 'class="row"') !== false;
+            if (!$contains) {
+                $content = '<div class="row"><div class="twelve columns">' . $content . '</div></div>';
+            }
             $html = '<div class="container ' . $attrs['class'] . '" ' . $style . '>' . $content . '</div>';
             return $html;
         }

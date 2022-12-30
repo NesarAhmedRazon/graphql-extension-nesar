@@ -54,4 +54,5 @@ function gqlExt_init()
 add_action('graphql_init', 'gqlExt_init');
 
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/shortcode/theme/shortcodes.php';
+remove_filter('the_content', 'wpautop');
 add_shortcode('container', ['ThemeShortCodes', 'container']);
