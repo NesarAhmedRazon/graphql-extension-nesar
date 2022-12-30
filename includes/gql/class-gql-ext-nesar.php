@@ -9,7 +9,7 @@
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
-if (!class_exists('next_ssr')) {
+if (!class_exists('GQL_Ext_Nesar')) {
     class GQL_Ext_Nesar
     {
         public function __construct()
