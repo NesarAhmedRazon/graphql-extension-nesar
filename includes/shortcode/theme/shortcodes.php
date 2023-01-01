@@ -23,7 +23,7 @@ if (!class_exists('ThemeShortCodes')) {
             }
 
 
-            $html = '</div></div><div class="containerSized section row' . $class . '" ' . $style . '>' . do_shortcode($content) . '</div>';
+            $html = '</div></div><div class="containerSized section' . $class . '" ' . $style . '>' . do_shortcode($content) . '</div>';
             return $html;
         }
     }
