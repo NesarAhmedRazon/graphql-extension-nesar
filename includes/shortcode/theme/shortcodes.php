@@ -12,27 +12,12 @@ defined('ABSPATH') || exit;
 if (!class_exists('ThemeShortCodes')) {
     class ThemeShortCodes
     {
-        public static function container($attrs, $content = "")
+        public static function section($atts, $content = null)
         {
-            $style = '';
-            $class = '';
-            if (!is_array($attrs)) {
-                $attrs = [];
-            }
-            $attrs = shortcode_atts(
-                [
-                    'class' => $class,
-                    'style' => $style
-                ],
-                $attrs,
-                'container'
-            );
-            $attrs['style'] != '' && $style = 'style="' . $attrs['style'] . '"';
-            $contains = strpos($content, 'class="row"') !== false;
-            if (!$contains) {
-                $content = '<div class="row"><div class="twelve columns">' . $content . '</div></div>';
-            }
-            $html = '<div class="container ' . $attrs['class'] . '" ' . $style . '>' . $content . '</div>';
+            extract(shortcode_atts(['class' => '', 'style' => '',], $atts));
+            $style = "style='" . $atts['style'] . "' \' ";
+            $class = " " . $atts['class'];
+            $html = '</div></div><div class="containerSized section' . $class . '" ' . $style . '>' . do_shortcode($content) . '</div>';
             return $html;
         }
     }
