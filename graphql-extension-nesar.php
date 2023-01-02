@@ -56,3 +56,6 @@ add_action('graphql_init', 'gqlExt_init');
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/shortcode/theme/shortcodes.php';
 remove_filter('the_content', 'wpautop');
 add_shortcode('section', ['ThemeShortCodes', 'section']);
+
+// Total Count Extention for GQL
+require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/total-counts-for-wp-graphql.php';
