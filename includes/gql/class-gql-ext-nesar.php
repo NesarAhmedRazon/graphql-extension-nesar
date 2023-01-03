@@ -86,7 +86,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
         public function getAllpostTypes()
         {
             $items = [];
-            $ignors = ['attachment', 'elementor_library', 'elementor-thhf', 'e-landing-page'];
+            $ignors = ['attachment', 'elementor_library', 'elementor-thhf', 'e-landing-page', 'blog'];
             $args = array(
                 'public'   => true,
             );
