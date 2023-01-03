@@ -59,3 +59,7 @@ add_shortcode('section', ['ThemeShortCodes', 'section']);
 
 // Total Count Extention for GQL
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/total-counts-for-wp-graphql.php';
+require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/wp-graphql-offset-pagination.php';
+if (!\class_exists('\WPGraphQL\Extensions\OffsetPagination')) {
+    \WPGraphQL\Extensions\OffsetPagination\Loader::init();
+}
