@@ -38,13 +38,33 @@ if (!class_exists('GQL_Ext_Nesar')) {
 
         public function makeUri($postType = '')
         {
+            $allUri = [];
             if ($postType == 'all') {
-                $allUri = [];
+
                 $PostTypes = $this->getAllpostTypes();
                 foreach ($PostTypes as $type => $slug) {
                     $posts = $this->get_all_post($type);
                     foreach ($posts as $url) {
                         array_push($allUri, $url);
+                    }
+                }
+                return $allUri;
+            } else {
+                $PostTypes = $this->getAllpostTypes();
+                foreach ($PostTypes as $type => $slug) {
+                    $posts = $this->get_all_post($type);
+                    foreach ($posts as $url) {
+                        $arrUrl = explode('/', $url);
+                        if (count($arrUrl) > 1) {
+                            if (in_array($postType, $arrUrl)) {
+                                $slug = array_shift($arrUrl);
+                                if ($slug == $postType) {
+                                    $regen = explode('/', $url);
+                                    array_shift($regen);
+                                    array_push($allUri, implode('/', $regen));
+                                }
+                            }
+                        }
                     }
                 }
                 return $allUri;
