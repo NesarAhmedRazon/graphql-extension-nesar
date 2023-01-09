@@ -59,6 +59,11 @@ if (!class_exists('GQL_Ext_Nesar')) {
                         'type' => 'Type',
                         'defaultValue' => 'all'
                     ],
+                    'exclude' => [
+                        'description' => __('Which Post Type you want to Query', 'graphql-extension-nesar'),
+                        'type' => ['list_of' => 'String'],
+
+                    ],
                 ],
                 'resolve' => function ($root, $args, $contex, $info) {
                     $data = $this->makeUri($args['postType'], $args['filter']);
@@ -135,8 +140,13 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 foreach ($all_posts as $post) {
                     $id = $post->ID;
                     $pid = $post->post_parent;
+                    $ptype = $post->post_type;
                     if (($filter === 'orphan') && (!in_array($id, $parents) && !in_array($pid, $parents))) {
-                        array_push($url, $this->createUrl($post));
+                        if (($ptype === 'post') || ($ptype === 'page')) {
+                            array_push($url, $this->createUrl($post));
+                        } else {
+                            array_push($url, $ptype . '/' . $this->createUrl($post));
+                        }
                     } elseif (($filter === 'parent') && (in_array($id, $parents) && !in_array($pid, $parents))) {
                         array_push($url, $this->createUrl($post));
                     } elseif ($filter === 'children' && in_array($pid, $parents)) {
