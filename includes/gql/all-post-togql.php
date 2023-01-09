@@ -8,7 +8,7 @@ function addAllPostTypeInGQL()
 
         $postType = get_post_type_object($slug);
         if (!array_key_exists("show_in_graphql", $postType)) {
-            var_dump($slug);
+
             $postType->show_in_graphql = true;
             $postType->graphql_single_name = $name;
             $postType->graphql_plural_name = $name . 's';
