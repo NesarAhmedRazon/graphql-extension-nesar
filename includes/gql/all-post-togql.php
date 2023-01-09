@@ -1,21 +1,21 @@
 <?php
 
-function addAllPostTypeInGQL()
-{
-    //$types = getAllpostTypes();
-    $slug = 'cool_timeline';
-    //foreach ($types as $slug => $name) {
-    $postType = get_post_type_object($slug);
-    //if (!array_key_exists("show_in_graphql", $postType)) {
+// function addAllPostTypeInGQL()
+// {
+//     //$types = getAllpostTypes();
+//     $slug = 'cool_timeline';
+//     //foreach ($types as $slug => $name) {
+//     $postType = get_post_type_object($slug);
+//     //if (!array_key_exists("show_in_graphql", $postType)) {
 
-    $postType->show_in_graphql = true;
-    $postType->graphql_single_name = $name;
-    $postType->graphql_plural_name = $name . 's';
-    //}
-    register_post_type($slug, $postType);
-    //}
-}
-add_action('init', 'addAllPostTypeInGQL', 100);
+//     $postType->show_in_graphql = true;
+//     $postType->graphql_single_name = $name;
+//     $postType->graphql_plural_name = $name . 's';
+//     //}
+//     register_post_type($slug, $postType);
+//     //}
+// }
+// add_action('init', 'addAllPostTypeInGQL', 100);
 
 
 // function getAllpostTypes()
