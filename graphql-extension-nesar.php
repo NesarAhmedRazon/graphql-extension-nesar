@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Graphql Extension by Nesar
  * Plugin URI: https://github.com/NesarAhmedRazon/graphql-extension-nesar
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: Nesar Ahmed
  * Author URI: https://github.com/NesarAhmedRazon
  * Description: This is an extension plugin for WP-Graphql
