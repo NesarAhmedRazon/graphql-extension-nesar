@@ -32,7 +32,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
                     ],
                     'hierarchyType' => [
                         'description' => __('Which Post Hierarchy Type you want to Query', 'graphql-extension-nesar'),
-                        'type' => 'hierarchyTypeEnum',
+                        'type' => 'Hierarchy',
                         'defaultValue' => 'none'
 
                     ],

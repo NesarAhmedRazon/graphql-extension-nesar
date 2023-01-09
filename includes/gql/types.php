@@ -14,7 +14,7 @@ class hierarchyTypeEnum
     }
     public static function register_type()
     {
-        register_graphql_enum_type('hierarchyTypeEnum', [
+        register_graphql_enum_type('Hierarchy', [
             'description' => __('The Type of Identifier used to fetch a single node. Default is "ID". To be used along with the "id" field.', 'wp-graphql'),
             'values'      => [
                 'NONE'          => [
