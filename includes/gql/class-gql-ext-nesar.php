@@ -138,14 +138,20 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 }
                 $parents = array_unique($parent, SORT_REGULAR);
                 foreach ($all_posts as $post) {
+                    global $wp_post_types;
+
+
+
                     $id = $post->ID;
                     $pid = $post->post_parent;
                     $ptype = $post->post_type;
+                    $obj = $wp_post_types[$ptype];
+                    $cc =  $obj->query_var;
                     if (($filter === 'orphan') && (!in_array($id, $parents) && !in_array($pid, $parents))) {
                         if (($ptype === 'post') || ($ptype === 'page')) {
                             array_push($url, $this->createUrl($post));
                         } else {
-                            array_push($url, $ptype . '/' . $this->createUrl($post));
+                            array_push($url, $cc . '/' . $this->createUrl($post));
                         }
                     } elseif (($filter === 'parent') && (in_array($id, $parents) && !in_array($pid, $parents))) {
                         array_push($url, $this->createUrl($post));
