@@ -18,6 +18,33 @@ if (!class_exists('GQL_Ext_Nesar')) {
         }
         public function addToGraphQl()
         {
+
+            register_graphql_enum_type('Type', [
+                'description' => __('The Type of Identifier used to fetch a single node. Default is "ID". To be used along with the "id" field.', 'graphql-extension-nesar'),
+                'values'      => [
+                    'ALL'          => [
+                        'name'        => 'ALL',
+                        'value'       => 'all',
+                        'description' => __('Get all uri without any hierarchy', 'graphql-extension-nesar'),
+                    ],
+                    'PARENT' => [
+                        'name'        => 'PARENT',
+                        'value'       => 'parent',
+                        'description' => __('Identify a menu node by the Database ID.', 'graphql-extension-nesar'),
+                    ],
+                    'CHILDREN'    => [
+                        'name'        => 'CHILDREN',
+                        'value'       => 'children',
+                        'description' => __('Identify a menu node by the slug of menu location to which it is assigned', 'graphql-extension-nesar'),
+                    ],
+                    'ORPHAN'    => [
+                        'name'        => 'ORPHAN',
+                        'value'       => 'orphan',
+                        'description' => __('Identify a menu node by the slug of menu location to which it is assigned', 'graphql-extension-nesar'),
+                    ]
+                ],
+            ]);
+
             register_graphql_field('RootQuery', 'allUri', [
                 'description' => __('Query All Pages and Post URI', 'graphql-extension-nesar'),
                 'type' => ['list_of' => 'String'],
@@ -26,24 +53,28 @@ if (!class_exists('GQL_Ext_Nesar')) {
                         'description' => __('Which Post Type you want to Query', 'graphql-extension-nesar'),
                         'type' => 'String',
                         'defaultValue' => 'all'
-
+                    ],
+                    'filter' => [
+                        'description' => __('Which Post Type you want to Query', 'graphql-extension-nesar'),
+                        'type' => 'Type',
+                        'defaultValue' => 'all'
                     ],
                 ],
                 'resolve' => function ($root, $args, $contex, $info) {
-                    $data = $this->makeUri($args['postType']);
+                    $data = $this->makeUri($args['postType'], $args['filter']);
                     return $data;
                 }
             ]);
         }
 
-        public function makeUri($postType = '')
+        public function makeUri($postType = '', $filter = 'all')
         {
             $allUri = [];
             if ($postType == 'all') {
 
                 $PostTypes = $this->getAllpostTypes();
                 foreach ($PostTypes as $type => $slug) {
-                    $posts = $this->get_all_post($type);
+                    $posts = $this->get_all_post($type, $filter);
                     foreach ($posts as $url) {
                         array_push($allUri, $url);
                     }
@@ -52,7 +83,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
             } else {
                 $PostTypes = $this->getAllpostTypes();
                 foreach ($PostTypes as $type => $slug) {
-                    $posts = $this->get_all_post($type);
+                    $posts = $this->get_all_post($type, 'all');
                     foreach ($posts as $url) {
                         $arrUrl = explode('/', $url);
                         if (count($arrUrl) > 1) {
@@ -83,10 +114,11 @@ if (!class_exists('GQL_Ext_Nesar')) {
             return $url;
         }
 
-        public function get_all_post($slug_name = '')
+        public function get_all_post($slug_name = '', $filter)
         {
             if ($slug_name !== "") {
                 $url = [];
+                $parent = [];
                 $args = [
                     'post_type' => $slug_name,
                     'posts_per_page' => -1,
@@ -95,8 +127,23 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 ];
                 $all_posts = get_posts($args);
                 foreach ($all_posts as $post) {
-
-                    array_push($url, $this->createUrl($post));
+                    if ($post->post_parent !== 0) {
+                        array_push($parent, $post->post_parent);
+                    }
+                }
+                $parents = array_unique($parent, SORT_REGULAR);
+                foreach ($all_posts as $post) {
+                    $id = $post->ID;
+                    $pid = $post->post_parent;
+                    if (($filter === 'orphan') && (!in_array($id, $parents) && !in_array($pid, $parents))) {
+                        array_push($url, $this->createUrl($post));
+                    } elseif (($filter === 'parent') && (in_array($id, $parents) && !in_array($pid, $parents))) {
+                        array_push($url, $this->createUrl($post));
+                    } elseif ($filter === 'children' && in_array($pid, $parents)) {
+                        array_push($url, $this->createUrl($post));
+                    } elseif ($filter === 'all') {
+                        array_push($url, $this->createUrl($post));
+                    }
                 }
                 return $url;
             } else {
