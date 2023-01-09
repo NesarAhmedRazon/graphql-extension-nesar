@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Graphql Extension by Nesar
  * Plugin URI: https://github.com/NesarAhmedRazon/graphql-extension-nesar
- * Version: 0.0.2
+ * Version: 0.0.1
  * Author: Nesar Ahmed
  * Author URI: https://github.com/NesarAhmedRazon
  * Description: This is an extension plugin for WP-Graphql
@@ -53,7 +53,6 @@ function gqlExt_init()
 }
 add_action('graphql_init', 'gqlExt_init');
 
-require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/types.php';
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/shortcode/theme/shortcodes.php';
 remove_filter('the_content', 'wpautop');
 add_shortcode('section', ['ThemeShortCodes', 'section']);
