@@ -64,36 +64,3 @@ require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/wp-graphql-offset-paginatio
 if (!\class_exists('\WPGraphQL\Extensions\OffsetPagination')) {
     \WPGraphQL\Extensions\OffsetPagination\Loader::init();
 }
-
-// function get_all_post($slug_name = '', $hierac)
-// {
-//     if ($slug_name !== "") {
-//         $url = [];
-//         $pars = [];
-//         $args = [
-//             'post_type' => $slug_name,
-//             'posts_per_page' => -1,
-//             // 'orderby'          => 'date',
-//             // 'order'            => 'DESC',
-//         ];
-//         $all_posts = get_posts($args);
-//         foreach ($all_posts as $post) {
-//             $post->post_parent != 0 && array_push($pars, $post->post_parent);
-//         }
-//         foreach ($all_posts as $post) {
-//             if (($hierac === 'orphan') && (!in_array($post->ID, $pars) && $post->post_parent === 0)) {
-//                 array_push($url, $post->post_name . '+' . $post->post_parent);
-//             } elseif (($hierac === 'parents') && (in_array($post->ID, $pars) && $post->post_parent === 0)) {
-//                 array_push($url, $post->post_name . '+' . $post->post_parent);
-//             } elseif (($hierac === 'children') && (in_array($post->post_parent, $pars))) {
-//                 array_push($url, $post->post_name . '+' . $post->post_parent);
-//             } elseif ($hierac === 'none') {
-//                 array_push($url, $post->post_name . '+' . $post->post_parent);
-//             }
-//         }
-//         return $url;
-//     } else {
-//         return null;
-//     }
-// }
-// var_dump(get_all_post('page', 'parents'));
