@@ -2,7 +2,7 @@
 
 function addAllPostTypeInGQL()
 {
-    $types = getAllpostTypes();
+    //$types = getAllpostTypes();
     $slug = 'cool_timeline';
     //foreach ($types as $slug => $name) {
     $postType = get_post_type_object($slug);
@@ -18,24 +18,24 @@ function addAllPostTypeInGQL()
 add_action('init', 'addAllPostTypeInGQL', 100);
 
 
-function getAllpostTypes()
-{
-    $items = [];
-    $ignors = ['attachment', 'elementor_library', 'elementor-thhf', 'e-landing-page', 'rslide'];
-    $args = array(
-        'public'   => true,
-    );
-    $post_types = get_post_types($args, 'objects');
+// function getAllpostTypes()
+// {
+//     $items = [];
+//     $ignors = ['attachment', 'elementor_library', 'elementor-thhf', 'e-landing-page', 'rslide'];
+//     $args = array(
+//         'public'   => true,
+//     );
+//     $post_types = get_post_types($args, 'objects');
 
-    foreach ($ignors as $ignor) {
-        unset($post_types[$ignor]);
-    }
-    if ($post_types) {
-        foreach ($post_types  as $post_type) {
-            $k = $post_type->name;
-            $v = $post_type->label;
-            $items[$k] = esc_html__($v, 'nesar-widgets');
-        }
-        return $items;
-    }
-}
+//     foreach ($ignors as $ignor) {
+//         unset($post_types[$ignor]);
+//     }
+//     if ($post_types) {
+//         foreach ($post_types  as $post_type) {
+//             $k = $post_type->name;
+//             $v = $post_type->label;
+//             $items[$k] = esc_html__($v, 'nesar-widgets');
+//         }
+//         return $items;
+//     }
+// }
