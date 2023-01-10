@@ -66,22 +66,25 @@ if (!class_exists('GQL_Ext_Nesar')) {
                     ],
                 ],
                 'resolve' => function ($root, $args, $contex, $info) {
-                    $data = $this->makeUri($args['postType'], $args['filter']);
+                    $data = $this->makeUri($args['postType'], $args['filter'], $args['exclude']);
+                    //wp_send_json($args['exclude']);
                     return $data;
                 }
             ]);
         }
 
-        public function makeUri($postType = '', $filter = 'all')
+        public function makeUri($postType = '', $filter = 'all', $exclude = [])
         {
             $allUri = [];
-            if ($postType == 'all') {
 
+            if ($postType == 'all') {
                 $PostTypes = $this->getAllpostTypes();
                 foreach ($PostTypes as $type => $slug) {
                     $posts = $this->get_all_post($type, $filter);
                     foreach ($posts as $url) {
-                        array_push($allUri, $url);
+                        if (!in_array($url, $exclude)) {
+                            array_push($allUri, $url);
+                        }
                     }
                 }
                 return $allUri;
@@ -97,7 +100,9 @@ if (!class_exists('GQL_Ext_Nesar')) {
                                 if ($slug == $postType) {
                                     $regen = explode('/', $url);
                                     array_shift($regen);
-                                    array_push($allUri, implode('/', $regen));
+                                    if (!in_array($url, $exclude)) {
+                                        array_push($allUri, implode('/', $regen));
+                                    }
                                 }
                             }
                         }
