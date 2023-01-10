@@ -1,4 +1,6 @@
 <?php
+
+
 function addTimeLineGql()
 {
     $slug1 = 'cool_timeline';
@@ -49,6 +51,7 @@ function getAllpostTypes()
     foreach ($ignors as $ignor) {
         unset($post_types[$ignor]);
     }
+
     if ($post_types) {
         foreach ($post_types  as $post_type) {
             $k = $post_type->name;
