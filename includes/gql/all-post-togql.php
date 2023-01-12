@@ -26,6 +26,14 @@ function addFaqGql()
     register_post_type($slug3, $postType3);
 }
 add_action('init', 'addFaqGql', 100);
+function add_author_support_to_faq()
+{
+    add_post_type_support('faq', 'author');
+}
+add_action('init', 'add_author_support_to_faq');
+
+
+
 function addPortfolioGql()
 {
     $slug2 = 'portfolio';
