@@ -79,6 +79,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
 
             if ($postType == 'all') {
                 $PostTypes = $this->getAllpostTypes();
+                wp_send_json($PostTypes);
                 foreach ($PostTypes as $type => $slug) {
                     $posts = $this->get_all_post($type, $filter);
                     foreach ($posts as $url) {
@@ -89,25 +90,35 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 }
                 return $allUri;
             } else {
+
                 $PostTypes = $this->getAllpostTypes();
-                foreach ($PostTypes as $type => $slug) {
-                    $posts = $this->get_all_post($type, 'all');
+                if ($postType) {
+                    $posts = $this->get_all_post($postType, $filter);
                     foreach ($posts as $url) {
-                        $arrUrl = explode('/', $url);
-                        if (count($arrUrl) > 1) {
-                            if (in_array($postType, $arrUrl)) {
-                                $slug = array_shift($arrUrl);
-                                if ($slug == $postType) {
-                                    $regen = explode('/', $url);
-                                    array_shift($regen);
-                                    if (!in_array($url, $exclude)) {
-                                        array_push($allUri, implode('/', $regen));
-                                    }
-                                }
-                            }
+                        if (!in_array($url, $exclude)) {
+                            array_push($allUri, $url);
                         }
                     }
                 }
+                // foreach ($PostTypes as $type => $slug) {
+                //     $posts = $this->get_all_post($type, $filter);
+
+                //     foreach ($posts as $url) {
+                //         $arrUrl = explode('/', $url);
+                //         if (count($arrUrl) > 1) {
+                //             if (in_array($postType, $arrUrl)) {
+                //                 $slug = array_shift($arrUrl);
+                //                 if ($slug == $postType) {
+                //                     $regen = explode('/', $url);
+                //                     array_shift($regen);
+                //                     if (!in_array($url, $exclude)) {
+                //                         array_push($allUri, implode('/', $regen));
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
                 return $allUri;
             }
         }
@@ -126,6 +137,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
 
         public function get_all_post($slug_name = '', $filter)
         {
+            //wp_send_json($slug_name);
             if ($slug_name !== "") {
                 $url = [];
                 $parent = [];
@@ -143,13 +155,16 @@ if (!class_exists('GQL_Ext_Nesar')) {
                 }
                 $parents = array_unique($parent, SORT_REGULAR);
                 $types = $this->getAllpostTypes();
+
                 foreach ($all_posts as $post) {
                     $id = $post->ID;
                     $pid = $post->post_parent;
                     $ptype = $post->post_type;
+
                     if (($filter === 'orphan') && (!in_array($id, $parents) && !in_array($pid, $parents))) {
                         if (($ptype === 'post') || ($ptype === 'page')) {
                             $nURL = $this->createUrl($post);
+
                             if (!array_key_exists($nURL, $types)) {
                                 array_push($url, $nURL);
                             }
