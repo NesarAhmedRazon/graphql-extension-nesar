@@ -73,7 +73,7 @@ if (!class_exists('GQL_Ext_Nesar')) {
             ]);
         }
 
-        public function makeUri($postType = '', $filter = 'all', $exclude = [])
+        public function makeUri($postType = 'all', $filter = 'all', $exclude = [])
         {
             $allUri = [];
 
