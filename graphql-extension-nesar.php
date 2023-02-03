@@ -56,7 +56,7 @@ add_action('graphql_init', 'gqlExt_init');
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/common.php';
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/shortcode/theme/shortcodes.php';
 require_once GQL_EXTNESAR_PLUGIN_DIR . 'includes/gql/all-post-togql.php';
-remove_filter('the_content', 'wpautop');
+//remove_filter('the_content', 'wpautop');
 add_shortcode('section', ['ThemeShortCodes', 'section']);
 
 // Total Count Extention for GQL
