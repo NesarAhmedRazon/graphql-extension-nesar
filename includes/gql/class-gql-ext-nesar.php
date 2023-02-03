@@ -79,15 +79,29 @@ if (!class_exists('GQL_Ext_Nesar')) {
 
             if ($postType == 'all') {
                 $PostTypes = $this->getAllpostTypes();
-                wp_send_json($PostTypes);
+                //
                 foreach ($PostTypes as $type => $slug) {
-                    $posts = $this->get_all_post($type, $filter);
-                    foreach ($posts as $url) {
-                        if (!in_array($url, $exclude)) {
-                            array_push($allUri, $url);
+                    if (!in_array($type, $exclude)) {
+                        $posts = $this->get_all_post($type, $filter);
+                        foreach ($posts as $url) {
+                            $arrUrl = explode('/', $url);
+                            if (count($arrUrl) > 1) {
+                                if (!in_array($arrUrl[0], $exclude)) {
+                                    array_push($allUri, $url);
+                                }
+                            } else {
+                                if (!in_array($url, $exclude)) {
+                                    array_push($allUri, $url);
+                                }
+                            }
+                            // }
+                            // if (!in_array($url, $exclude)) {
+                            //     array_push($allUri, $url);
+                            // }
                         }
                     }
                 }
+
                 return $allUri;
             } else {
 
