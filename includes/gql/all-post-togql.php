@@ -45,7 +45,7 @@ function addPortfolioGql()
     }
     register_post_type($slug2, $postType2);
 }
-add_action('init', 'addPortfolioGql', 100);
+//add_action('init', 'addPortfolioGql', 100);
 
 function getAllpostTypes()
 {
