@@ -62,7 +62,7 @@ if (!function_exists('testimonials_list')) {
         }else{
             $card = '<div class="testimonial-item'.$class.'" >'.$body.'</div>';
         }
-var_dump($card);
+
         return $card; 
     }
     add_shortcode( 'testimonials', 'the_list' );
