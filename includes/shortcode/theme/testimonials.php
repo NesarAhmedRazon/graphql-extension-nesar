@@ -66,5 +66,5 @@ if (!function_exists('testimonials_list')) {
         return $card; 
     }
     add_shortcode( 'testimonials', 'the_list' );
-    add_shortcode( 'testimonial_card', 'the_card' );
+    add_shortcode( 'testimonial', 'the_card' );
 }
