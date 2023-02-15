@@ -54,7 +54,7 @@ if (!function_exists('testimonials_list')) {
         }else{
             $readmore='' ;
         }
-        $body = '<div class="testimonial-content"><p class="testimonial-quote">'. do_shortcode($content) .'</p></div>';
+        $body = '<div class="testimonial-content"><p class="testimonial-text">'. do_shortcode($content) .'</p></div>';
         $body .= '<div class="testimonial-footer">'.$name.$org.$tag.$readmore.'</div>';
         
         if($link){
@@ -62,7 +62,7 @@ if (!function_exists('testimonials_list')) {
         }else{
             $card = '<div class="testimonial-item'.$class.'" >'.$body.'</div>';
         }
-
+var_dump($card);
         return $card; 
     }
     add_shortcode( 'testimonials', 'the_list' );
